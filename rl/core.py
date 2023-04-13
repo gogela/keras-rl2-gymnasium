@@ -174,7 +174,7 @@ class Agent:
                 done = False
                 for _ in range(action_repetition):
                     callbacks.on_action_begin(action)
-                    observation, reward, terminated, truncated, info = env.step(action) #change to the new formatt (no longer single value for done)
+                    observation, r, terminated, truncated, info = env.step(action) #change to the new formatt (no longer single value for done)
                     done = terminated or truncated
                     observation = deepcopy(observation)
                     if self.processor is not None:
@@ -323,7 +323,7 @@ class Agent:
                 if self.processor is not None:
                     action = self.processor.process_action(action)
                 callbacks.on_action_begin(action)
-                observation, reward, terminated, truncated, info = env.step(action) #change to the new formatt (no longer single value for done)
+                observation, r, terminated, truncated, info = env.step(action) #change to the new formatt (no longer single value for done)
                 done = terminated or truncated
                 observation = deepcopy(observation)
                 if self.processor is not None:
@@ -348,8 +348,8 @@ class Agent:
                 accumulated_info = {}
                 for _ in range(action_repetition):
                     callbacks.on_action_begin(action)
-                    observation, reward, terminated, truncated, info = env.step(action) #change to the new formatt (no longer single value for done)
-                    done = terminated or truncated
+                    observation, r, terminated, truncated, info = env.step(action) #change to the new formatt (no longer single value for done)
+                    d = terminated or truncated
                     observation = deepcopy(observation)
                     if self.processor is not None:
                         observation, r, d, info = self.processor.process_step(observation, r, d, info)
