@@ -128,7 +128,7 @@ class Agent:
 
                     # Obtain the initial observation by resetting the environment.
                     self.reset_states()
-                    observation = deepcopy(env.reset())
+                    observation,_info = deepcopy(env.reset())
                     if self.processor is not None:
                         observation = self.processor.process_observation(observation)
                     assert observation is not None
@@ -151,7 +151,7 @@ class Agent:
                         callbacks.on_action_end(action)
                         if done:
                             warnings.warn(f'Env ended before {nb_random_start_steps} random steps could be performed at the start. You should probably lower the `nb_max_start_steps` parameter.')
-                            observation = deepcopy(env.reset())
+                            observation, _info = deepcopy(env.reset())
                             if self.processor is not None:
                                 observation = self.processor.process_observation(observation)
                             break
@@ -305,7 +305,7 @@ class Agent:
 
             # Obtain the initial observation by resetting the environment.
             self.reset_states()
-            observation = deepcopy(env.reset())
+            observation, _info = deepcopy(env.reset())
             if self.processor is not None:
                 observation = self.processor.process_observation(observation)
             assert observation is not None
@@ -328,7 +328,7 @@ class Agent:
                 callbacks.on_action_end(action)
                 if done:
                     warnings.warn(f'Env ended before {nb_random_start_steps} random steps could be performed at the start. You should probably lower the `nb_max_start_steps` parameter.')
-                    observation = deepcopy(env.reset())
+                    observation, _info = deepcopy(env.reset())
                     if self.processor is not None:
                         observation = self.processor.process_observation(observation)
                     break
