@@ -144,7 +144,8 @@ class Agent:
                         if self.processor is not None:
                             action = self.processor.process_action(action)
                         callbacks.on_action_begin(action)
-                        observation, reward, done, info = env.step(action)
+                        observation, reward, terminated, truncated, info = env.step(action) #change to the new formatt (no longer single value for done)
+                        done = terminated or truncated
                         observation = deepcopy(observation)
                         if self.processor is not None:
                             observation, reward, done, info = self.processor.process_step(observation, reward, done, info)
@@ -173,7 +174,8 @@ class Agent:
                 done = False
                 for _ in range(action_repetition):
                     callbacks.on_action_begin(action)
-                    observation, r, done, info = env.step(action)
+                    observation, reward, terminated, truncated, info = env.step(action) #change to the new formatt (no longer single value for done)
+                    done = terminated or truncated
                     observation = deepcopy(observation)
                     if self.processor is not None:
                         observation, r, done, info = self.processor.process_step(observation, r, done, info)
@@ -321,7 +323,8 @@ class Agent:
                 if self.processor is not None:
                     action = self.processor.process_action(action)
                 callbacks.on_action_begin(action)
-                observation, r, done, info = env.step(action)
+                observation, reward, terminated, truncated, info = env.step(action) #change to the new formatt (no longer single value for done)
+                done = terminated or truncated
                 observation = deepcopy(observation)
                 if self.processor is not None:
                     observation, r, done, info = self.processor.process_step(observation, r, done, info)
@@ -345,7 +348,8 @@ class Agent:
                 accumulated_info = {}
                 for _ in range(action_repetition):
                     callbacks.on_action_begin(action)
-                    observation, r, d, info = env.step(action)
+                    observation, reward, terminated, truncated, info = env.step(action) #change to the new formatt (no longer single value for done)
+                    done = terminated or truncated
                     observation = deepcopy(observation)
                     if self.processor is not None:
                         observation, r, d, info = self.processor.process_step(observation, r, d, info)
